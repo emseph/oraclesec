@@ -1,0 +1,26 @@
+<html>
+  <body>
+    <header th:fragment="adminheader">
+      <div class="header-1">
+        <a th:href="@{/admin}" class="logo"
+          ><i class="fas fa-desktop"></i>SATURN | Admin</a
+        >
+      </div>
+      <div class="header-2">
+        <div id="menu-bar" class="fas fa-bars"></div>
+        <nav class="navbar">
+          <a th:href="@{/admin/product}">product</a>
+          <a th:href="@{/admin/event}">event</a>
+          <a th:href="@{/admin/coupon}">coupon</a>
+        </nav>
+        <div class="icons flex-row">
+          <form th:action="@{/logout}" method="post">
+            <a class="fas fa-user-circle flex-row">&nbsp;</a>
+            <input type="submit" value="Logout"/>
+          </form>
+
+        </div>
+      </div>
+    </header>
+  </body>
+</html>
