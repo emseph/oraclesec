@@ -1,14 +1,14 @@
 package com.oraclesample.oraclesec.controller;
 
+import com.oraclesample.oraclesec.model.User;
 import com.oraclesample.oraclesec.service.CategoryService;
 import com.oraclesample.oraclesec.service.ProductService;
 import com.oraclesample.oraclesec.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ShopController {
@@ -59,8 +59,6 @@ public class ShopController {
     public String registerUser(Model model) {
         return "/user/register";
     }
-
-
 
     // @GetMapping(value = "/")
     // public String () {
