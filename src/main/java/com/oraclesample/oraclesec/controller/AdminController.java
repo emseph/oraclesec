@@ -60,6 +60,7 @@ public class AdminController {
     public String adminCouponAdd(Model model) {
         model.addAttribute("coupon", new Coupon());
         model.addAttribute("event", eventService.getAllEvent());
+        model.addAttribute("category",categoryService.getAllCategory());
         return "/admin/couponAdd";
     }
 

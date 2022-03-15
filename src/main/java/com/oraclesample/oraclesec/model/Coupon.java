@@ -20,6 +20,10 @@ public class Coupon {
     @JoinColumn(name = "event_id", referencedColumnName = "event_id")
     private Event event;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+    private Category category;
+
     public Coupon(int id, String name, float disc) {
         super();
         this.id = id;
@@ -32,7 +36,7 @@ public class Coupon {
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
@@ -40,7 +44,7 @@ public class Coupon {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -48,7 +52,7 @@ public class Coupon {
     }
 
     public float getDisc() {
-        return this.disc;
+        return disc;
     }
 
     public void setDisc(float disc) {
@@ -56,11 +60,18 @@ public class Coupon {
     }
 
     public Event getEvent() {
-        return this.event;
+        return event;
     }
 
     public void setEvent(Event event) {
         this.event = event;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

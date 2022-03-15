@@ -61,6 +61,17 @@
           ></option>
         </select>
 
+        Select Category:
+        <select class="form-control" th:field="*{category}" required>
+          <!-- <option disabled>select an event</option> -->
+          <option
+                  th:each="category :${category}"
+                  th:value="${category.id}"
+                  th:text="${category.name}"
+                  th:selected="${category.id}"
+          ></option>
+        </select>
+
         <button type="submit">Add Coupon</button>
       </form>
     </section>
