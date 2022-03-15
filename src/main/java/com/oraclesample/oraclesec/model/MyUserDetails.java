@@ -9,12 +9,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public class MyUserDetails implements UserDetails {
+public class MyUserDetails extends User implements UserDetails {
 
     private User user;
 
     public MyUserDetails(User user){
+        super(user);
         this.user = user;
+    }
+
+    public User getUser() {
+        return this.user;
     }
 
     @Override

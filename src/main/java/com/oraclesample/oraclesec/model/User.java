@@ -89,13 +89,23 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id") )
     private Set<Role> roles = new HashSet<>();
 
-    public User(User user){
+    public User(int id, String username, String password, String fname, String lname, boolean isEnabled, Set<Role> roles) {
         this.id = id;
-        this.fname = fname;
-        this.lname = lname;
         this.username = username;
         this.password = password;
+        this.fname = fname;
+        this.lname = lname;
+        this.isEnabled = isEnabled;
         this.roles = roles;
+    }
+
+    public User(User user){
+        this.id = user.getId();
+        this.fname = user.getFname();
+        this.lname = user.getLname();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.roles = user.getRoles();
     }
 
     public User(){

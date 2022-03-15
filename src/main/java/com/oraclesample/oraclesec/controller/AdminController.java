@@ -10,11 +10,11 @@ import java.util.Optional;
 import com.oraclesample.oraclesec.model.Coupon;
 import com.oraclesample.oraclesec.model.Event;
 import com.oraclesample.oraclesec.model.Product;
-import com.oraclesample.oraclesec.service.CategoryService;
-import com.oraclesample.oraclesec.service.CouponService;
-import com.oraclesample.oraclesec.service.EventService;
-import com.oraclesample.oraclesec.service.ProductService;
+import com.oraclesample.oraclesec.model.User;
+import com.oraclesample.oraclesec.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +42,9 @@ public class AdminController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/admin")
     public String adminHome() {
@@ -175,6 +178,15 @@ public class AdminController {
     public String deleteProduct(@PathVariable int id) {
         productService.removeProductById(id);
         return "redirect:/admin/product";
+    }
+
+    @GetMapping("/admin/test")
+    public String testGround(Model model){
+        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.getAuthUser(auth);
+        
+        model.addAttribute("users",userService.getAllUser());
+        return "/admin/test";
     }
 
 }

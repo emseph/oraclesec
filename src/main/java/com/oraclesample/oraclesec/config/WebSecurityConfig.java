@@ -1,6 +1,7 @@
 package com.oraclesample.oraclesec.config;
 
 import com.oraclesample.oraclesec.service.UserDetailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+
 
     @Bean
     public UserDetailsService userDetailsService(){
@@ -38,6 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        super.configure(auth);
+//        auth.userDetailsService(userDetailServiceImpl);
+//        auth.inMemoryAuthentication().withUser("user").password("password").roles("ADMIN");
         auth.authenticationProvider(authenticationProvider());
     }
 

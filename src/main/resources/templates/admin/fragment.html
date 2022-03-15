@@ -3,8 +3,9 @@
     <header th:fragment="adminheader">
       <div class="header-1">
         <a th:href="@{/admin}" class="logo"
-          ><i class="fas fa-desktop"></i>SATURN | Admin</a
+          ><i class="fas fa-desktop"></i>SATURN | Admin : <span sec:authentication="name"></span></a
         >
+
       </div>
       <div class="header-2">
         <div id="menu-bar" class="fas fa-bars"></div>
