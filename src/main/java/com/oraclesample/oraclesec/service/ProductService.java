@@ -37,4 +37,12 @@ public class ProductService {
     public List<Product> getAllProductByCategoryName(String name) {
         return productRepository.findAllByCategory(name);
     }
+    
+    //for cart
+    public Product getProductById(Long productId) throws ProductNotExistException {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (!optionalProduct.isPresent())
+            throw new ProductNotExistException("Product id is invalid " + productId);
+        return optionalProduct.get();
+    }
 }
