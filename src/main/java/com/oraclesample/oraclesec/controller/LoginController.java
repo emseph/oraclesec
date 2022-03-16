@@ -6,6 +6,7 @@ import com.oraclesample.oraclesec.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,11 +28,17 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/register")
+    public String registerUser(Model model){
+        return "/user/register";
+    }
+
     @PostMapping("/register")
     public String registerUserPost(@ModelAttribute("user") User user, HttpServletRequest request) throws ServletException {
         String password = user.getPassword();
+        user.setRoles();
         user.setPassword(bCryptPasswordEncoder.encode(password));
         userRepository.save(user);
-        return "/user/register";
+        return "redirect:/user/login";
     }
 }

@@ -8,6 +8,7 @@ public class Coupon {
     @Id
     @SequenceGenerator(name = "COUPON_SEQ", sequenceName = "COUPON_SEQ", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COUPON_SEQ")
+    @Column(name = "coupon_id")
     private int id;
 
     @Column(nullable = false)
@@ -24,11 +25,12 @@ public class Coupon {
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
-    public Coupon(int id, String name, float disc) {
-        super();
+    public Coupon(int id, String name, float disc, Event event, Category category) {
         this.id = id;
         this.name = name;
         this.disc = disc;
+        this.event = event;
+        this.category = category;
     }
 
     public Coupon() {
