@@ -54,12 +54,7 @@ public class ShopController {
         model.addAttribute("users", userService.getAllUser());
         return "/user/viewProduct";
     }
-
-    @GetMapping("/register")
-    public String registerUser(Model model) {
-        return "/user/register";
-    }
-
+    
     // @GetMapping(value = "/")
     // public String () {
     // return "index";
