@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -50,14 +51,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/shop/**").hasAuthority("USER")
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/","/shop/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll()
-                .defaultSuccessUrl("/home")
+                .formLogin().loginPage("/login").permitAll()
+                .defaultSuccessUrl("/default")
                 .and()
-                .logout().permitAll();
+                .logout().permitAll()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/sign-out")).logoutSuccessUrl("/login")
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID").and().exceptionHandling().and().csrf()
+                .disable();
+
+        http.headers().frameOptions().disable();
     }
     @Override
     public void configure(WebSecurity web) throws Exception {
