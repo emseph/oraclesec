@@ -42,8 +42,7 @@ public class LoginController {
         if(request.isUserInRole("ROLE_ADMIN")){
             return "/admin/index";
         }
-        return "/user/index";
-
+        return "/admin";
     }
 
     @GetMapping("/register")

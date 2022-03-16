@@ -56,9 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
-                .defaultSuccessUrl("/default")
+                .defaultSuccessUrl("/admin")
                 .and()
-                .logout().permitAll()
+                .logout().logoutUrl("/login").permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/sign-out")).logoutSuccessUrl("/login")
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID").and().exceptionHandling().and().csrf()
                 .disable();

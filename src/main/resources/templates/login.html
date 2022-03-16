@@ -43,10 +43,11 @@
 <div class="wrapper">
     <h1>LOGIN HERE</h1>
     <p></p>
-    <form id="loginForm" action="login" method="post" class="loginform">
+    <form id="loginForm" action="login" method='POST' class="loginform">
         <input type="text" name="username" id="username" placeholder="Enter username" required>
         <input type="password" name="password" id="password" placeholder="Password" required>
-        <button onclick="loginUser(event)">
+        <input type="submit" name="submit" value="submit">
+        <button type="submit" value="Submit">
             Login
         </button>
         <br>
@@ -62,8 +63,8 @@
     </p>
 
 </div>
-<script src="../scripts/login.js"></script>
-<script src="../scripts/script.js"></script>
+<!--<script src="../scripts/login.js"></script>-->
+<!--<script src="../scripts/script.js"></script>-->
 </body>
 
 </html>
