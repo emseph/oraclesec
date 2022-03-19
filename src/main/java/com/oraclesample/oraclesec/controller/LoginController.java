@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,26 +33,36 @@ public class LoginController {
     @Autowired
     RoleService roleService;
 
-    @GetMapping("/login")
-    public String login(){
-        return "login";
+
+    @GetMapping("/logout")
+    public String logout(){
+        return "redirect: login";
     }
 
-    @GetMapping("/default")
-    public String afterLogin(HttpServletRequest request){
-        if(request.isUserInRole("ROLE_ADMIN")){
-            return "/admin/index";
-        }
-        return "/admin";
+    @GetMapping("/login")
+    public String login(){
+        return "/user/login";
     }
+
+//    @GetMapping("/default")
+//    public String afterLogin(HttpServletRequest request){
+//        if(request.isUserInRole("ROLE_ADMIN")){
+//            return "/admin/index";
+//        }
+//        return "/admin";
+//    }
 
     @GetMapping("/register")
     public String registerUser(Model model){
+        model.addAttribute("user", new User());
         return "/user/register";
     }
 
     @PostMapping("/register")
-    public String registerUserPost(@ModelAttribute("user") User user, HttpServletRequest request) throws ServletException {
+    public String registerUserPost(
+            @ModelAttribute("user") User user,
+            HttpServletRequest request) throws ServletException {
+        user.setEnabled(true);
         String password = user.getPassword();
         user.setPassword(bCryptPasswordEncoder.encode(password));
 //        List<Role> roles = new ArrayList<>();
@@ -59,6 +70,7 @@ public class LoginController {
         roles.add(roleService.show((int) 2));
         user.setRoles(roles);
         userRepository.save(user);
-        return "redirect:/user/login";
+        request.login(user.getUsername(),password);
+        return "redirect:/login";
     }
 }

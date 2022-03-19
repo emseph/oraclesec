@@ -51,15 +51,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/shop/**").hasRole("USER")
+                .antMatchers("/register", "/").permitAll()
+                .antMatchers("/shop/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
-                .defaultSuccessUrl("/admin")
+                .formLogin().loginPage("/login").permitAll().failureUrl("/login?error=true")
+                .defaultSuccessUrl("/shop",true)
                 .and()
                 .logout().logoutUrl("/login").permitAll()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/sign-out")).logoutSuccessUrl("/login")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/shop")
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID").and().exceptionHandling().and().csrf()
                 .disable();
 

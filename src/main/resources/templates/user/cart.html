@@ -25,8 +25,6 @@
         <a href="/" class="logo"><i class="fas fa-desktop"></i>SATURN</a>
 
         <div class="icons">
-          <a href="cart.html" class="fas fa-shopping-cart"></a>
-          <a href="feedback.html" class="fas fa-star"></a>
           <a th:href="@{/login}" class="fas fa-user-circle"></a>
         </div>
       </div>
@@ -38,5 +36,47 @@
         <label for="search-box" class="fas fa-search"></label>
       </form>
     </header>
+
+
+    <section class="product" id="product" th:each="item : ${cartItem}">
+      <!-- <h1 class="heading" th:text="${product.category.getName()}">Monitors</h1> -->
+      <div class="box-container">
+        <div class="box">
+          <img th:src="@{${'/img/' + item.product.imageName}}" alt="" />
+          <h3 th:text="${item.product.name}">ViewPlus MH-24</h3>
+          <div class="price">
+            quantity:
+            <a th:href="@{/cart-minus/{id}(id=${item.cartId})}"><span
+                    class="fa fa-angle-left dec qtybtn"></span></a>
+            <span th:text="${item.quantity}">
+            </span>
+            <a th:href="@{/cart-add/{id}(id=${item.cartId})}"><span
+                    class="fa fa-angle-right inc qtybtn"></span></a>
+            <a th:href="@{/destroy-cart-item/(id=${item.cartId})}" title="Delete"
+                    class="btn-remove"><i class="fa fa-close">Remove</i></a>
+          </div>
+          <div class="price" th:text="₱ + ${item.product.price * item.quantity}"></div>
+        </div>
+      </div>
+    </section>
+    <section class="product">
+      <div class="box-container">
+        <div class="box">
+          <span>
+            <h3>Total: </h3>
+            <h3 th:text="${total} ? ${'₱' + total} : 'P 00.000'"></h3>
+          </span>
+        </div>
+      </div>
+    </section>
+    <section class="product">
+      <div class="box-container">
+        <div class="box">
+          <span>
+            <h3><a th:href="@{/checkout}">Go to Checkout</a></h3>
+          </span>
+        </div>
+      </div>
+    </section>
   </body>
 </html>

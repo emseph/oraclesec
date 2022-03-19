@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-
 import com.oraclesample.oraclesec.model.Coupon;
 import com.oraclesample.oraclesec.model.Event;
 import com.oraclesample.oraclesec.model.Product;
@@ -28,29 +27,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class AdminController {
-
     public static String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/img";
-
     @Autowired
     EventService eventService;
-
     @Autowired
     CouponService couponService;
-
     @Autowired
     ProductService productService;
-
     @Autowired
     CategoryService categoryService;
-
     @Autowired
     UserService userService;
-
     @GetMapping("/admin")
     public String adminHome() {
         return "/admin/index";
     }
-
     //
     @GetMapping("/admin/coupon")
     public String adminCoupon(Model model) {
@@ -58,7 +49,6 @@ public class AdminController {
         model.addAttribute("event", eventService.getAllEvent());
         return "/admin/coupon";
     }
-
     @GetMapping("/admin/coupon/add")
     public String adminCouponAdd(Model model) {
         model.addAttribute("coupon", new Coupon());
@@ -66,19 +56,16 @@ public class AdminController {
         model.addAttribute("category",categoryService.getAllCategory());
         return "/admin/couponAdd";
     }
-
     @PostMapping("/admin/coupon/add")
     public String adminCouponAddPost(@ModelAttribute("coupon") Coupon coupon) {
         couponService.addCoupon(coupon);
         return "redirect:/admin/coupon";
     }
-
     @GetMapping("/admin/coupon/delete/{id}")
     public String deleteCoupon(@PathVariable int id) {
         couponService.removeCouponById(id);
         return "redirect:/admin/coupon";
     }
-
     @GetMapping("/admin/coupon/update/{id}")
     public String updateCoupon(@PathVariable int id, Model model) {
         model.addAttribute("event", eventService.getAllEvent());
@@ -90,32 +77,27 @@ public class AdminController {
             return "404";
         }
     }
-
     //
     @GetMapping("/admin/event")
     public String adminEvent(Model model) {
         model.addAttribute("event", eventService.getAllEvent());
         return "/admin/event";
     }
-
     @GetMapping("/admin/event/add")
     public String adminEventAdd(Model model) {
         model.addAttribute("event", new Event());
         return "/admin/eventAdd";
     }
-
     @PostMapping("/admin/event/add")
     public String adminEventAddPost(@ModelAttribute("event") Event event) {
         eventService.addEvent(event);
         return "redirect:/admin/event";
     }
-
     @GetMapping("/admin/event/delete/{id}")
     public String deleteEvent(@PathVariable int id) {
         eventService.removeEventById(id);
         return "redirect:/admin/event";
     }
-
     @GetMapping("/admin/event/update/{id}")
     public String updateEvent(@PathVariable int id, Model model) {
         Optional<Event> event = eventService.getEventById(id);
@@ -126,7 +108,6 @@ public class AdminController {
             return "404";
         }
     }
-
     //
     @GetMapping("/admin/product")
     public String adminProduct(Model model) {
@@ -134,14 +115,12 @@ public class AdminController {
         model.addAttribute("category", categoryService.getAllCategory());
         return "/admin/product";
     }
-
     @GetMapping("/admin/product/add")
     public String adminProductAdd(Model model) {
         model.addAttribute("product", new Product());
         model.addAttribute("category", categoryService.getAllCategory());
         return "/admin/productAdd";
     }
-
     @PostMapping("/admin/product/add")
     public String adminProductAddPost(
             @ModelAttribute("product") Product product,
@@ -150,7 +129,7 @@ public class AdminController {
 
         String imageUUID;
         if (!file.isEmpty()) {
-            imageUUID = file.getOriginalFilename();
+            imageUUID = file.getOriginalFilename(); //imageUUID = powersupply-1.jpg
             Path fileNameAndPath = Paths.get(uploadDir, imageUUID);
             Files.write(fileNameAndPath, file.getBytes());
 
@@ -161,7 +140,6 @@ public class AdminController {
         productService.addProduct(product);
         return "redirect:/admin/product";
     }
-
     @GetMapping("/admin/product/update/{id}")
     public String updateProduct(@PathVariable int id, Model model) {
         model.addAttribute("category", categoryService.getAllCategory());
@@ -173,20 +151,16 @@ public class AdminController {
             return "404";
         }
     }
-
     @GetMapping("/admin/product/delete/{id}")
     public String deleteProduct(@PathVariable int id) {
         productService.removeProductById(id);
         return "redirect:/admin/product";
     }
-
     @GetMapping("/admin/test")
     public String testGround(Model model){
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.getAuthUser(auth);
-        
         model.addAttribute("users",userService.getAllUser());
         return "/admin/test";
     }
-
 }

@@ -14,6 +14,17 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    public Product show(int id) {
+        Optional<Product> optional = productRepository.findById(id);
+        Product product = null;
+        if (optional.isPresent()) {
+            product = optional.get();
+        } else {
+            throw new RuntimeException(" Category not found for id :: " + id);
+        }
+        return product;
+    }
+
     public List<Product> getAllProduct() {
         return productRepository.findAll();
     }

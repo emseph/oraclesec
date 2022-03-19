@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html
-  lang="en"
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:th="http://www.thymeleaf.org"
->
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,7 +29,10 @@
         <div class="icons">
           <a href="cart.html" class="fas fa-shopping-cart"></a>
           <a href="feedback.html" class="fas fa-star"></a>
-          <a th:href="@{/login}" class="fas fa-user-circle"></a>
+          <a
+                  sec:authorize="isAnonymous()"
+                  th:href="@{/login}" class="fas fa-user-circle"></a>
+          <a sec:authorize="hasRole('ADMIN')">Go to Admin</a>
         </div>
       </div>
     </header>
@@ -55,9 +58,6 @@
         </a>
       </nav>
 
-      <!-- <nav class="navbar" th:each="category : ${category}">
-      <a href="" th:text="${category.name}"></a>
-    </nav> -->
     </div>
     <!-- CONTAINER -->
     <section class="product" id="product" th:each="product : ${product}">
@@ -74,16 +74,22 @@
           </div>
           <div class="price" th:text="₱ + ${product.price}"></div>
 
-          <div class="quantity">
-            <span>quantity :</span>
-            <input type="number" min="1" max="1000" value="1" />
-            <span> /pc </span>
+          <div sec:authorize="hasRole('USER')">
+            <form method="POST" th:action="@{/addToCart/{id}(id = ${product.id})}">
+              <div class="description">
+                <span>specifications:</span>
+                <span th:text="${product.description}"></span>
+              </div>
+              <span>quantity :</span>
+              <input
+                      id="quantity"
+                      name="quantity"
+                      type="number" min="1" max="1000" value="1" />
+              <span> /pc </span>
+              <button class="btn" type="submit">Add Product</button>
+            </form>
           </div>
-          <div class="description">
-            <span>specifications:</span>
-            <span th:text="${product.description}"></span>
-          </div>
-          <a href="cart.html" class="btn">add to cart</a>
+
         </div>
       </div>
     </section>

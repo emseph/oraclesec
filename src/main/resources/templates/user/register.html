@@ -41,70 +41,43 @@
     <div class="wrapper">
       <h1>REGISTER HERE</h1>
       <p></p>
-      <form action="registration" method="post">
+      <form th:action="@{/register}" method="POST" th:object="${user}">
+        <input type="hidden" name="id" th:field="*{id}" />
         <input
           type="text"
-          name="firstname"
-          id="firstname"
+          name="fname"
+          id="fname"
           placeholder="Enter your Firstname"
           required
         />
         <input
           type="text"
-          name="Lastname"
-          id="Lastname"
+          name="lname"
+          id="lname"
           placeholder="Enter your Lastname"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Enter your Email"
           required
         />
         <input
           type="text"
           name="username"
           id="username"
-          placeholder="Create Username"
+          placeholder="Enter Username"
           required
         />
         <input
           type="password"
           name="password"
           id="password"
-          placeholder="Create Password"
+          placeholder="Enter Password"
         />
-        <input
-          type="text"
-          name="contact"
-          id="contact"
-          placeholder="Personal No."
-        />
-        <div class="radio-containers">
-          <input type="radio" id="male" name="gender" />
-          <label for="male">Male</label>
-          <input type="radio" id="female" name="gender" />
-          <label for="female">Female</label>
-          <input type="radio" id="other" name="gender" />
-          <label for="other">Other</label>
-        </div>
         <br />
-        <input
-          type="text"
-          name="address"
-          id="address"
-          placeholder="Enter your Address"
-        />
-        <input type="date" name="dob" id="dob" />
         <button input type="submit" class="submit">Register</button>
         <button input type="reset" class="reset">Clear Form</button>
         <br />
         <br />
         <p class="mt-4 pt-2 mb-0">
           Already have an account?
-          <a href="login.html" style="color: green">Click here.</a>
+          <a href="/login" style="color: green">Click here.</a>
         </p>
       </form>
     </div>
