@@ -36,7 +36,7 @@
 <!--            <p sec:authentication="name">!</p>-->
 <!--          </div>-->
           <span sec:authorize="isAuthenticated()"> <a class="fas fa-user-circle flex-row"></a> <a sec:authentication="name"></a></span>
-
+          <a sec:authorize="hasRole('USER')" th:href="@{/dashboard}">go to dashboard</a>
           <a
                   th:href="@{/admin}"
                   sec:authorize="hasRole('ADMIN')">Go to Admin</a>

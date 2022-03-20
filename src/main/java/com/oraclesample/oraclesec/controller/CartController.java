@@ -129,4 +129,14 @@ public class CartController {
         orderDetailsService.save(orderDetails);
         return"redirect:/cart";
     }
+
+    @GetMapping("/dashboard")
+    public String dashboard(Model model){
+        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.getAuthUser(auth);
+        List<OrderDetails> orderDetail = orderDetailsService.index(user);
+        model.addAttribute("user", user);
+        model.addAttribute("orderDetail", orderDetail);
+        return "/user/dashboard";
+    }
 }
