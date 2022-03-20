@@ -46,22 +46,12 @@
         </div>
         <br/>
         <div class="box">
-            <table>
-                <thead>
-                <th>Order ID</th>
-                <th>Order Date</th>
-                <th>Delivery Date</th>
-                <th>Amount</th>
-                </thead>
-                <tbody>
-                <tr th:each="order : ${orderDetail}">
-                    <th th:text="${order.id}"></th>
-                    <th th:text="${order.orderDate}"></th>
-                    <th th:text="${order.deliveryDate}"></th>
-                    <th th:text="${order.totalAmount}"></th>
-                </tr>
-                </tbody>
-            </table>
+            <div th:each="order : ${orderDetail}">
+                <span>Order ID: <p th:text="${order.id}"></p></span>
+                <span>Order Date: <p th:text="${order.orderDate}"></p></span>
+                <span>Delivery Date: <p th:text="${order.deliveryDate}"></p></span>
+                <span>Amount Payable: <p th:text="${order.totalAmount}"></p></span>
+            </div>
         </div>
     </div>
 </section>
