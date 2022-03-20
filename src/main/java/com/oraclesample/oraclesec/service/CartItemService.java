@@ -16,13 +16,8 @@ public class CartItemService {
 
     @Autowired
     CartItemRepository cartItemRepository;
-
-//    public List<CartItem> indexStatus(User user, String status){
-//        return cartItemRepository.findByUserStatus(user, status);
-//    }
-
-    public List<CartItem> index(User user) {
-        return cartItemRepository.findByUser(user);
+    public List<CartItem> index(User user, String status){
+        return cartItemRepository.findByUserAndStatus(user, status);
     }
 
     public CartItem show(int id) {

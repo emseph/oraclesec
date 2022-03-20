@@ -25,7 +25,7 @@ public class OrderDetails {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
-    private String totalAmount;
+    private double totalAmount;
 
     public OrderDetails(){
         super();
@@ -63,15 +63,15 @@ public class OrderDetails {
         this.user = user;
     }
 
-    public String getTotalAmount() {
+    public double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(String totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public OrderDetails(int id, Date orderDate, Date deliveryDate, User user, String totalAmount) {
+    public OrderDetails(int id, Date orderDate, Date deliveryDate, User user, double totalAmount) {
         this.id = id;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;

@@ -77,7 +77,7 @@ public class CartController {
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         double total = 0;
         User user = userService.getAuthUser(auth);
-        List<CartItem> cartItem = cartItemService.index(user);
+        List<CartItem> cartItem = cartItemService.index(user, "IC");
         if (cartItem.isEmpty()) {
             model.addAttribute("cartItem", "NoData");
         } else {
@@ -85,6 +85,7 @@ public class CartController {
                     .mapToDouble(num -> num.doubleValue()).sum();
             model.addAttribute("cartItem", cartItem);
         }
+        model.addAttribute("user", user);
         model.addAttribute("total", total);
         return "/user/cart";
     }
@@ -93,10 +94,17 @@ public class CartController {
     public String checkout(Model model){
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.getAuthUser(auth);
-        List<CartItem> cartItem = cartItemRepository.findByUserAndStatus(user,"IC");
+        List<CartItem> cartItem = cartItemService.index(user,"IC");
         double total = 0;
         total = cartItem.stream().map(item -> item.getProduct().getPrice() * item.getQuantity())
                 .mapToDouble(num -> num.doubleValue()).sum();
+        if (cartItem.isEmpty()) {
+            model.addAttribute("cartItem", "NoData");
+        } else {
+            total = cartItem.stream().map(item -> item.getProduct().getPrice() * item.getQuantity())
+                    .mapToDouble(num -> num.doubleValue()).sum();
+            model.addAttribute("cartItem", cartItem);
+        }
         model.addAttribute("total", total);
         model.addAttribute("cartItem", cartItem);
         model.addAttribute("user", user);
@@ -104,7 +112,7 @@ public class CartController {
         return "/user/checkout";
     }
     @PostMapping("/checkout")
-    public String checkoutPost(){
+    public String checkoutPost(@RequestParam("total") Double total){
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         OrderDetails orderDetails = new OrderDetails();
         Date orderDate = Date.valueOf(LocalDate.now());
@@ -112,9 +120,9 @@ public class CartController {
         User user = userService.getAuthUser(auth);
         List<CartItem> cartItem = cartItemRepository.findByUserAndStatus(user, "IC");
         cartItem.forEach(it->it.setStatus("CO"));
-        double total = 0;
         total = cartItem.stream().map(item -> item.getProduct().getPrice() * item.getQuantity())
                 .mapToDouble(num -> num.doubleValue()).sum();
+        orderDetails.setTotalAmount(total);
         orderDetails.setUser(user);
         orderDetails.setOrderDate(orderDate);
         orderDetails.setDeliveryDate(deliveryDate);

@@ -38,10 +38,15 @@
     </header>
 
 
-    <section class="product" id="product" th:each="item : ${cartItem}">
-      <!-- <h1 class="heading" th:text="${product.category.getName()}">Monitors</h1> -->
+    <section class="product" id="product" >
       <div class="box-container">
-        <div class="box">
+        <div class="box"
+             th:if="${cartItem=='NoData'}">
+          <h3>your cart is empty</h3>
+        </div>
+        <div class="box"
+             th:if="${cartItem!='NoData'}"
+             th:each="item : ${cartItem}">
           <img th:src="@{${'/img/' + item.product.imageName}}" alt="" />
           <h3 th:text="${item.product.name}">ViewPlus MH-24</h3>
           <div class="price">
@@ -64,7 +69,7 @@
         <div class="box">
           <span>
             <h3>Total: </h3>
-            <h3 th:text="${total} ? ${'₱' + total} : 'P 00.000'"></h3>
+            <h3 th:text="${total} ? ${'₱' + total} : 'P 0.00'"></h3>
           </span>
         </div>
       </div>
